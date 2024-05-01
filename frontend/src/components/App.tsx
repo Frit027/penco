@@ -11,14 +11,14 @@ export const App = () => {
     }, []);
 
     useEffect(() => {
-        socket.emit('click', { count })
+        socket.emit('click', { count });
     }, [count]);
 
     const handleClick = () => setCount((prevCount) => prevCount + 1);
 
     return (
         <div>
-            <button onClick={handleClick}>Click</button>
+            <button type="button" onClick={handleClick}>Click</button>
             <span>{count}</span>
         </div>
     );
