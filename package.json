@@ -2,6 +2,9 @@
   "name": "penco",
   "version": "1.0.0",
   "description": "Collaborative drawing web app with PDF embedding",
+  "scripts": {
+    "lint": "npx eslint ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Frit027/penco.git"
@@ -13,6 +16,15 @@
   },
   "homepage": "https://github.com/Frit027/penco#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "typescript": "^5.4.5"
   }
 }
