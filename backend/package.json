@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "backend-penco",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The server side of the penco web application",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts"
   },
