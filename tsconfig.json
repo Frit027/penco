@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./frontend/src",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "es2015"
+  },
+  "include": [
+    "backend/src/**/*",
+    "frontend/src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
