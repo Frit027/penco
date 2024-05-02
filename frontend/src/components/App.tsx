@@ -20,6 +20,10 @@ export const App = () => {
     const [isDraw, setIsDraw] = useState(false);
     const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
 
+    /**
+     * Line drawing
+     * @param { TPathCoordinates } pathCoordinates - Coordinates of the start and end points of the line
+     */
     const drawLine = (pathCoordinates: TPathCoordinates) => {
         const context = canvasRef.current?.getContext('2d');
         if (!context) {
