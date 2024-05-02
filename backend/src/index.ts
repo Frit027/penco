@@ -14,9 +14,9 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log(`a user ${socket.id} connected`);
+    console.log(`User ${socket.id} connected.`);
     socket.on('disconnect', () => {
-        console.log(`user ${socket.id} disconnected`);
+        console.log(`User ${socket.id} disconnected.`);
     });
 
     socket.on('draw', (data) => {
@@ -24,4 +24,4 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(4000, () => console.log('Server running at http://localhost:4000'));
+server.listen(4000, () => console.log('Server running at http://localhost:4000.'));
