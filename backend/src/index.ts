@@ -19,8 +19,8 @@ io.on('connection', (socket) => {
         console.log(`user ${socket.id} disconnected`);
     });
 
-    socket.on('click', (data) => {
-        socket.broadcast.emit('click', data);
+    socket.on('draw', (data) => {
+        socket.broadcast.emit('draw', data);
     });
 });
 
