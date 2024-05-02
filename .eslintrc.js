@@ -23,6 +23,7 @@ module.exports = {
     ],
     rules: {
         indent: ['error', 4],
+        'max-len': ['error', { code: 120 }],
         'no-console': ['warn', { allow: ['log'] }],
         'import/prefer-default-export': 0,
         '@typescript-eslint/indent': ['error', 4],
@@ -31,5 +32,6 @@ module.exports = {
             namedComponents: 'arrow-function',
             unnamedComponents: 'arrow-function',
         }],
+        'react/jsx-indent-props': ['error', 4],
     },
 };
