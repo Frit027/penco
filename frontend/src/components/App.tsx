@@ -3,29 +3,36 @@ import { io } from 'socket.io-client';
 
 const socket = io('http://localhost:4000');
 
-type Coordinate = {
+type TMouseCoordinates = {
     x: number,
     y: number,
+};
+
+type TPathCoordinates = {
+    x1: number,
+    y1: number,
+    x2: number,
+    y2: number,
 };
 
 export const App = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDraw, setIsDraw] = useState(false);
-    const [mousePosition, setMousePosition] = useState<Coordinate>({ x: 0, y: 0 });
+    const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
 
-    const drawLine = (coordinates: { startX: number, startY: number, endX: number, endY: number }) => {
-        if (!canvasRef.current) {
-            return;
-        }
-
-        const context = canvasRef.current.getContext('2d');
+    const drawLine = (pathCoordinates: TPathCoordinates) => {
+        const context = canvasRef.current?.getContext('2d');
         if (!context) {
             return;
         }
 
+        const {
+            x1, y1, x2, y2,
+        } = pathCoordinates;
+
         context.beginPath();
-        context.moveTo(coordinates.startX, coordinates.startY);
-        context.lineTo(coordinates.endX, coordinates.endY);
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
         context.closePath();
         context.stroke();
     };
@@ -50,10 +57,10 @@ export const App = () => {
             };
 
             const coordinates = {
-                startX: mousePosition.x,
-                startY: mousePosition.y,
-                endX: newMousePosition.x,
-                endY: newMousePosition.y,
+                x1: mousePosition.x,
+                y1: mousePosition.y,
+                x2: newMousePosition.x,
+                y2: newMousePosition.y,
             };
 
             socket.emit('draw', coordinates);
@@ -104,7 +111,6 @@ export const App = () => {
         return () => canvas.removeEventListener('mouseup', handleMouseUp);
     }, [handleMouseUp]);
 
-    console.log('render');
     return (
         <canvas
             ref={canvasRef}
