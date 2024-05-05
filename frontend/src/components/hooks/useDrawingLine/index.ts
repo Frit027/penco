@@ -1,8 +1,6 @@
 import { useState, useEffect, RefObject } from 'react';
-import { io } from 'socket.io-client';
+import { socket } from '../../../socket';
 import { TMouseCoordinates, TPathCoordinates } from './interfaces';
-
-const socket = io('http://localhost:4000');
 
 /**
  * Hook for drawing a line on the canvas
