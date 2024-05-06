@@ -19,8 +19,16 @@ io.on('connection', (socket) => {
         console.log(`User ${socket.id} disconnected.`);
     });
 
-    socket.on('draw', (data) => {
-        socket.broadcast.emit('draw', data);
+    socket.on('drawLine', (data) => {
+        socket.broadcast.emit('drawLine', data);
+    });
+
+    socket.on('drawRect', (data) => {
+        socket.broadcast.emit('drawRect', data);
+    });
+
+    socket.on('drawRectStop', (data) => {
+        socket.broadcast.emit('drawRectStop', data);
     });
 });
 
