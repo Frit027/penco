@@ -1,12 +1,18 @@
 import { useState, useEffect, RefObject } from 'react';
-import { socket } from '../../../socket';
+import { socket } from '../../socket';
 import { TMouseCoordinates, TPathCoordinates } from './interfaces';
 
 /**
  * Hook for drawing a line on the canvas
- * @param {RefObject<HTMLCanvasElement>} canvasRef - Canvas object reference
+ * @param {RefObject<HTMLCanvasElement>} fakeCanvasRef - The intermediate canvas on which the figures are drawn first
+ * @param {RefObject<HTMLCanvasElement>} originCanvasRef - The final canvas onto which the final figures are transferred
+ * @param {string} figureType - The type of figure to determine whether to use a hook
  */
-export const useDrawingLine = (canvasRef: RefObject<HTMLCanvasElement>) => {
+export const useDrawingLine = (
+    fakeCanvasRef: RefObject<HTMLCanvasElement>,
+    originCanvasRef: RefObject<HTMLCanvasElement>,
+    figureType: string,
+) => {
     const [isDraw, setIsDraw] = useState(false);
     const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
 
@@ -14,9 +20,14 @@ export const useDrawingLine = (canvasRef: RefObject<HTMLCanvasElement>) => {
      * Line drawing
      * @param {TPathCoordinates} pathCoordinates - Coordinates of the start and end points of the line
      */
-    const drawLine = (pathCoordinates: TPathCoordinates) => {
-        const context = canvasRef.current?.getContext('2d');
-        if (!context) {
+    const draw = (pathCoordinates: TPathCoordinates) => {
+        if (!fakeCanvasRef.current) {
+            return;
+        }
+        const fakeCanvas = fakeCanvasRef.current;
+
+        const fakeContext = fakeCanvas.getContext('2d');
+        if (!fakeContext) {
             return;
         }
 
@@ -24,11 +35,17 @@ export const useDrawingLine = (canvasRef: RefObject<HTMLCanvasElement>) => {
             x1, y1, x2, y2,
         } = pathCoordinates;
 
-        context.beginPath();
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        context.closePath();
-        context.stroke();
+        fakeContext.beginPath();
+        fakeContext.moveTo(x1, y1);
+        fakeContext.lineTo(x2, y2);
+        fakeContext.closePath();
+        fakeContext.stroke();
+
+        const originContext = originCanvasRef.current?.getContext('2d');
+        if (!originContext) {
+            return;
+        }
+        originContext.drawImage(fakeCanvas, 0, 0);
     };
 
     /**
@@ -65,8 +82,8 @@ export const useDrawingLine = (canvasRef: RefObject<HTMLCanvasElement>) => {
                 y2: newMousePosition.y,
             };
 
-            socket.emit('draw', coordinates);
-            drawLine(coordinates);
+            socket.emit('drawLine', coordinates);
+            draw(coordinates);
 
             setMousePosition({
                 x: newMousePosition.x,
@@ -84,51 +101,52 @@ export const useDrawingLine = (canvasRef: RefObject<HTMLCanvasElement>) => {
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('draw', (data) => drawLine(data));
+        socket.on('drawLine', (data) => draw(data));
 
         return () => {
-            socket.off('draw');
+            socket.off('drawLine');
         };
-    }, [canvasRef]);
+    }, [fakeCanvasRef, originCanvasRef, figureType]);
 
     /**
      * Canvas subscription to the mouse down event
      */
     useEffect(() => {
-        if (!canvasRef.current) {
+        if (!fakeCanvasRef.current || figureType !== 'line') {
             return undefined;
         }
 
-        const canvas = canvasRef.current;
-        canvas.addEventListener('mousedown', handleMouseDown);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mousedown', handleMouseDown);
 
-        return () => canvas.removeEventListener('mousedown', handleMouseDown);
+        return () => fakeCanvas.removeEventListener('mousedown', handleMouseDown);
     }, [handleMouseDown]);
 
     /**
      * Canvas subscription to the mouse move event
      */
     useEffect(() => {
-        if (!canvasRef.current) {
+        if (!fakeCanvasRef.current || figureType !== 'line') {
             return undefined;
         }
 
-        const canvas = canvasRef.current;
-        canvas.addEventListener('mousemove', handleMouseMove);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mousemove', handleMouseMove);
 
-        return () => canvas.removeEventListener('mousemove', handleMouseMove);
+        return () => fakeCanvas.removeEventListener('mousemove', handleMouseMove);
     }, [handleMouseMove]);
 
     /**
      * Canvas subscription to the mouse up event
      */
     useEffect(() => {
-        if (!canvasRef.current) {
+        if (!fakeCanvasRef.current || figureType !== 'line') {
             return undefined;
         }
-        const canvas = canvasRef.current;
-        canvas.addEventListener('mouseup', handleMouseUp);
 
-        return () => canvas.removeEventListener('mouseup', handleMouseUp);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mouseup', handleMouseUp);
+
+        return () => fakeCanvas.removeEventListener('mouseup', handleMouseUp);
     }, [handleMouseUp]);
 };
