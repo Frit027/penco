@@ -70,7 +70,7 @@ export const useDrawingRectangle = (
                 height: e.pageY - rect.top - y,
             };
 
-            socket.emit('drawRect', rectangleProperties);
+            socket.emit('drawRectangle', rectangleProperties);
             draw(rectangleProperties);
         }
     };
@@ -89,7 +89,7 @@ export const useDrawingRectangle = (
         const width = e.pageX - rect.left - x;
         const height = e.pageY - rect.top - y;
 
-        socket.emit('drawRectStop', {
+        socket.emit('drawRectangleStop', {
             x, y, width, height,
         });
         originContext.strokeRect(x, y, width, height);
@@ -101,9 +101,9 @@ export const useDrawingRectangle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('drawRect', (data: TRectangle) => draw(data));
+        socket.on('drawRectangle', (data: TRectangle) => draw(data));
 
-        socket.on('drawRectStop', (data: TRectangle) => {
+        socket.on('drawRectangleStop', (data: TRectangle) => {
             const originContext = originCanvasRef.current?.getContext('2d');
             if (!originContext) {
                 return;
@@ -112,8 +112,8 @@ export const useDrawingRectangle = (
         });
 
         return () => {
-            socket.off('drawRect');
-            socket.off('drawRectStop');
+            socket.off('drawRectangle');
+            socket.off('drawRectangleStop');
         };
     }, [fakeCanvasRef, originCanvasRef, figureType]);
 
