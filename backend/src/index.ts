@@ -23,12 +23,12 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('drawLine', data);
     });
 
-    socket.on('drawRect', (data) => {
-        socket.broadcast.emit('drawRect', data);
+    socket.on('drawRectangle', (data) => {
+        socket.broadcast.emit('drawRectangle', data);
     });
 
-    socket.on('drawRectStop', (data) => {
-        socket.broadcast.emit('drawRectStop', data);
+    socket.on('drawRectangleStop', (data) => {
+        socket.broadcast.emit('drawRectangleStop', data);
     });
 });
 
