@@ -1,6 +1,6 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
-import { TMouseCoordinates, TPathCoordinates } from '../useDrawingLine/interfaces';
+import { TMouseCoordinates, TRectangle } from './interfaces';
 
 /**
  * Hook for drawing a rectangle on the canvas
@@ -17,26 +17,26 @@ export const useDrawingRectangle = (
     const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
 
     /**
-     * Line drawing
-     * @param {TPathCoordinates} pathCoordinates - Coordinates of the start and end points of the line
+     * Rectangle drawing
+     * @param {TPathCoordinates} rectangleProperties - Properties of the rectangle being drawn
      */
-    const draw = (pathCoordinates: TPathCoordinates) => {
+    const draw = (rectangleProperties: TRectangle) => {
         if (!fakeCanvasRef.current) {
             return;
         }
 
         const fakeCanvas = fakeCanvasRef.current;
-        const context = fakeCanvas.getContext('2d');
-        if (!context) {
+        const fakeContext = fakeCanvas.getContext('2d');
+        if (!fakeContext) {
             return;
         }
 
         const {
-            x1, y1, x2, y2,
-        } = pathCoordinates;
+            x, y, width, height,
+        } = rectangleProperties;
 
-        context.clearRect(0, 0, fakeCanvas.width, fakeCanvas.height);
-        context.strokeRect(x1, y1, x2 - x1, y2 - y1);
+        fakeContext.clearRect(0, 0, fakeCanvas.width, fakeCanvas.height);
+        fakeContext.strokeRect(x, y, width, height);
     };
 
     /**
@@ -60,16 +60,17 @@ export const useDrawingRectangle = (
     const handleMouseMove = (e: MouseEvent) => {
         if (isDraw) {
             const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
+            const { x, y } = mousePosition;
 
-            const coordinates = {
-                x1: mousePosition.x,
-                y1: mousePosition.y,
-                x2: e.pageX - rect.left,
-                y2: e.pageY - rect.top,
+            const rectangleProperties = {
+                x,
+                y,
+                width: e.pageX - rect.left - x,
+                height: e.pageY - rect.top - y,
             };
 
-            socket.emit('drawRect', coordinates);
-            draw(coordinates);
+            socket.emit('drawRect', rectangleProperties);
+            draw(rectangleProperties);
         }
     };
 
@@ -77,8 +78,8 @@ export const useDrawingRectangle = (
      * Handling a mouse up
      */
     const handleMouseUp = (e: MouseEvent) => {
-        const overlayContext = originCanvasRef.current?.getContext('2d');
-        if (!overlayContext) {
+        const originContext = originCanvasRef.current?.getContext('2d');
+        if (!originContext) {
             return;
         }
 
@@ -87,9 +88,10 @@ export const useDrawingRectangle = (
         const width = e.pageX - rect.left - x;
         const height = e.pageY - rect.top - y;
 
-        socket.emit('drawRectStop', { x1: x, y1: y, x2: width, y2: height });
-        console.log({ x1: x, y1: y, x2: width, y2: height });
-        overlayContext.strokeRect(x, y, width, height);
+        socket.emit('drawRectStop', {
+            x, y, width, height,
+        });
+        originContext.strokeRect(x, y, width, height);
 
         setIsDraw(false);
     };
@@ -98,18 +100,14 @@ export const useDrawingRectangle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('drawRect', (data) => {
-            console.log('rect');
-            draw(data);
-        });
+        socket.on('drawRect', (data: TRectangle) => draw(data));
 
-        socket.on('drawRectStop', (data) => {
-            console.log('stop');
-            const overlayContext = originCanvasRef.current?.getContext('2d');
-            if (!overlayContext) {
+        socket.on('drawRectStop', (data: TRectangle) => {
+            const originContext = originCanvasRef.current?.getContext('2d');
+            if (!originContext) {
                 return;
             }
-            overlayContext.strokeRect(data.x1, data.y1, data.x2, data.y2);
+            originContext.strokeRect(data.x, data.y, data.width, data.height);
         });
 
         return () => {
@@ -126,10 +124,10 @@ export const useDrawingRectangle = (
             return undefined;
         }
 
-        const canvas = fakeCanvasRef.current;
-        canvas.addEventListener('mousedown', handleMouseDown);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mousedown', handleMouseDown);
 
-        return () => canvas.removeEventListener('mousedown', handleMouseDown);
+        return () => fakeCanvas.removeEventListener('mousedown', handleMouseDown);
     }, [handleMouseDown]);
 
     /**
@@ -140,10 +138,10 @@ export const useDrawingRectangle = (
             return undefined;
         }
 
-        const canvas = fakeCanvasRef.current;
-        canvas.addEventListener('mousemove', handleMouseMove);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mousemove', handleMouseMove);
 
-        return () => canvas.removeEventListener('mousemove', handleMouseMove);
+        return () => fakeCanvas.removeEventListener('mousemove', handleMouseMove);
     }, [handleMouseMove]);
 
     /**
@@ -154,9 +152,9 @@ export const useDrawingRectangle = (
             return undefined;
         }
 
-        const canvas = fakeCanvasRef.current;
-        canvas.addEventListener('mouseup', handleMouseUp);
+        const fakeCanvas = fakeCanvasRef.current;
+        fakeCanvas.addEventListener('mouseup', handleMouseUp);
 
-        return () => canvas.removeEventListener('mouseup', handleMouseUp);
+        return () => fakeCanvas.removeEventListener('mouseup', handleMouseUp);
     }, [handleMouseUp]);
 };
