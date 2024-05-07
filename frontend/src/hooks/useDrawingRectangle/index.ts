@@ -1,6 +1,7 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
-import { TMouseCoordinates, TRectangle } from './interfaces';
+import { TMouseCoordinates } from '../interfaces';
+import { TRectangle } from './interfaces';
 
 /**
  * Hook for drawing a rectangle on the canvas

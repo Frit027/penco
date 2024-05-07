@@ -1,6 +1,7 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
-import { TMouseCoordinates, TPathCoordinates } from './interfaces';
+import { TMouseCoordinates } from '../interfaces';
+import { TPathCoordinates } from './interfaces';
 
 /**
  * Hook for drawing a line on the canvas
