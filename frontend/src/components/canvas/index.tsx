@@ -1,20 +1,36 @@
-import React, { useRef } from 'react';
-import { useDrawingLine } from '../hooks/useDrawingLine';
+import React, { useState, useRef } from 'react';
+import { useDrawingLine } from '../../hooks/useDrawingLine';
+import { useDrawingRectangle } from '../../hooks/useDrawingRectangle';
 
 /**
  * Component for displaying a canvas
  */
 export const Canvas = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [figureType, setFigureType] = useState('');
+    const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
+    const originCanvasRef = useRef<HTMLCanvasElement>(null);
 
-    useDrawingLine(canvasRef);
+    useDrawingLine(fakeCanvasRef, originCanvasRef, figureType);
+    useDrawingRectangle(fakeCanvasRef, originCanvasRef, figureType);
+
+    const handleChangeFigureType = (selectedFigureType: string) => setFigureType(selectedFigureType);
 
     return (
-        <canvas
-            ref={canvasRef}
-            width="600"
-            height="600"
-            style={{ backgroundColor: '#eee', border: '1px solid #ccc', margin: '10px' }}
-        />
+        <div>
+            <button type="button" onClick={() => handleChangeFigureType('line')}>Line</button>
+            <button type="button" onClick={() => handleChangeFigureType('rect')}>Rect</button>
+            <canvas
+                ref={originCanvasRef}
+                width="600"
+                height="600"
+                style={{ position: 'absolute', border: '1px solid #ccc', margin: '10px' }}
+            />
+            <canvas
+                ref={fakeCanvasRef}
+                width="600"
+                height="600"
+                style={{ position: 'absolute', border: '1px solid #ccc', margin: '10px' }}
+            />
+        </div>
     );
 };
