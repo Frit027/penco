@@ -30,6 +30,14 @@ io.on('connection', (socket) => {
     socket.on('drawRectangleStop', (data) => {
         socket.broadcast.emit('drawRectangleStop', data);
     });
+
+    socket.on('drawCircle', (data) => {
+        socket.broadcast.emit('drawCircle', data);
+    });
+
+    socket.on('drawCircleStop', (data) => {
+        socket.broadcast.emit('drawCircleStop', data);
+    });
 });
 
 server.listen(4000, () => console.log('Server running at http://localhost:4000.'));
