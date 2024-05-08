@@ -19,7 +19,7 @@ export const useDrawingRectangle = (
 
     /**
      * Rectangle drawing
-     * @param {TPathCoordinates} rectangleProperties - Properties of the rectangle being drawn
+     * @param {TRectangle} rectangleProperties - Properties of the rectangle being drawn
      */
     const draw = (rectangleProperties: TRectangle) => {
         if (!fakeCanvasRef.current) {
