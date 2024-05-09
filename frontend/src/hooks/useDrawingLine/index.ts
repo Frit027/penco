@@ -83,7 +83,7 @@ export const useDrawingLine = (
                 y2: newMousePosition.y,
             };
 
-            socket.emit('drawLine', coordinates);
+            socket.emit('draw:line', coordinates);
             draw(coordinates);
 
             setMousePosition({
@@ -102,10 +102,10 @@ export const useDrawingLine = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('drawLine', (data) => draw(data));
+        socket.on('draw:line', (data) => draw(data));
 
         return () => {
-            socket.off('drawLine');
+            socket.off('draw:line');
         };
     }, [fakeCanvasRef, originCanvasRef, figureType]);
 

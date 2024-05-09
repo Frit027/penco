@@ -86,7 +86,7 @@ export const useDrawingCircle = (
         const { x, y } = mousePosition;
         const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
 
-        socket.emit('drawCircle', circleProperties);
+        socket.emit('draw:circle', circleProperties);
         drawOnFakeCanvas(circleProperties);
     };
 
@@ -98,7 +98,7 @@ export const useDrawingCircle = (
         const { x, y } = mousePosition;
         const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
 
-        socket.emit('drawCircleStop', circleProperties);
+        socket.emit('stop-drawing:circle', circleProperties);
         drawOnOriginCanvas(circleProperties);
 
         setIsDraw(false);
@@ -108,12 +108,12 @@ export const useDrawingCircle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('drawCircle', (data: TCircle) => drawOnFakeCanvas(data));
-        socket.on('drawCircleStop', (data: TCircle) => drawOnOriginCanvas(data));
+        socket.on('draw:circle', (data: TCircle) => drawOnFakeCanvas(data));
+        socket.on('stop-drawing:circle', (data: TCircle) => drawOnOriginCanvas(data));
 
         return () => {
-            socket.off('drawCircle');
-            socket.off('drawCircleStop');
+            socket.off('draw:circle');
+            socket.off('stop-drawing:circle');
         };
     }, [fakeCanvasRef, originCanvasRef, figureType]);
 

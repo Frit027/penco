@@ -19,24 +19,24 @@ io.on('connection', (socket) => {
         console.log(`User ${socket.id} disconnected.`);
     });
 
-    socket.on('drawLine', (data) => {
-        socket.broadcast.emit('drawLine', data);
+    socket.on('draw:line', (data) => {
+        socket.broadcast.emit('draw:line', data);
     });
 
-    socket.on('drawRectangle', (data) => {
-        socket.broadcast.emit('drawRectangle', data);
+    socket.on('draw:rectangle', (data) => {
+        socket.broadcast.emit('draw:rectangle', data);
     });
 
-    socket.on('drawRectangleStop', (data) => {
-        socket.broadcast.emit('drawRectangleStop', data);
+    socket.on('stop-drawing:rectangle', (data) => {
+        socket.broadcast.emit('stop-drawing:rectangle', data);
     });
 
-    socket.on('drawCircle', (data) => {
-        socket.broadcast.emit('drawCircle', data);
+    socket.on('draw:circle', (data) => {
+        socket.broadcast.emit('draw:circle', data);
     });
 
-    socket.on('drawCircleStop', (data) => {
-        socket.broadcast.emit('drawCircleStop', data);
+    socket.on('stop-drawing:circle', (data) => {
+        socket.broadcast.emit('stop-drawing:circle', data);
     });
 });
 
