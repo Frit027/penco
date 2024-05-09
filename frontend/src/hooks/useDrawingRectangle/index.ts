@@ -1,5 +1,6 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
+import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
 import { TRectangle } from './interfaces';
 
@@ -133,7 +134,7 @@ export const useDrawingRectangle = (
      * Canvas subscription to the mouse down event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'rect') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Rectangle) {
             return undefined;
         }
 
@@ -147,7 +148,7 @@ export const useDrawingRectangle = (
      * Canvas subscription to the mouse move event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'rect') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Rectangle) {
             return undefined;
         }
 
@@ -161,7 +162,7 @@ export const useDrawingRectangle = (
      * Canvas subscription to the mouse up event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'rect') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Rectangle) {
             return undefined;
         }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
+import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
 import { TCircle } from './interfaces';
 
@@ -121,7 +122,7 @@ export const useDrawingCircle = (
      * Canvas subscription to the mouse down event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'circle') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Circle) {
             return undefined;
         }
 
@@ -135,7 +136,7 @@ export const useDrawingCircle = (
      * Canvas subscription to the mouse move event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'circle') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Circle) {
             return undefined;
         }
 
@@ -149,7 +150,7 @@ export const useDrawingCircle = (
      * Canvas subscription to the mouse up event
      */
     useEffect(() => {
-        if (!fakeCanvasRef.current || figureType !== 'circle') {
+        if (!fakeCanvasRef.current || figureType !== Figure.Circle) {
             return undefined;
         }
 
