@@ -18,10 +18,14 @@ export const useDrawingRectangle = (
     const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
 
     /**
-     * Rectangle drawing
+     * Drawing a rectangle on a fake canvas
      * @param {TRectangle} rectangleProperties - Properties of the rectangle being drawn
+     * @param {number} rectangleProperties.x - The x-axis coordinate of the rectangle's starting point
+     * @param {number} rectangleProperties.y - The y-axis coordinate of the rectangle's starting point
+     * @param {number} rectangleProperties.width - The rectangle's width
+     * @param {number} rectangleProperties.height - The rectangle's height
      */
-    const draw = (rectangleProperties: TRectangle) => {
+    const drawOnFakeCanvas = ({ x, y, width, height }: TRectangle) => {
         if (!fakeCanvasRef.current) {
             return;
         }
@@ -32,12 +36,24 @@ export const useDrawingRectangle = (
             return;
         }
 
-        const {
-            x, y, width, height,
-        } = rectangleProperties;
-
         fakeContext.clearRect(0, 0, fakeCanvas.width, fakeCanvas.height);
         fakeContext.strokeRect(x, y, width, height);
+    };
+
+    /**
+     * Drawing a rectangle on the original canvas
+     * @param {TRectangle} rectangleProperties - Properties of the rectangle being drawn
+     * @param {number} rectangleProperties.x - The x-axis coordinate of the rectangle's starting point
+     * @param {number} rectangleProperties.y - The y-axis coordinate of the rectangle's starting point
+     * @param {number} rectangleProperties.width - The rectangle's width
+     * @param {number} rectangleProperties.height - The rectangle's height
+     */
+    const drawOnOriginCanvas = ({ x, y, width, height }: TRectangle) => {
+        const originContext = originCanvasRef.current?.getContext('2d');
+        if (!originContext) {
+            return;
+        }
+        originContext.strokeRect(x, y, width, height);
     };
 
     /**
@@ -59,20 +75,21 @@ export const useDrawingRectangle = (
      * @param {MouseEvent} e - Mouse click event
      */
     const handleMouseMove = (e: MouseEvent) => {
-        if (isDraw) {
-            const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-            const { x, y } = mousePosition;
-
-            const rectangleProperties = {
-                x,
-                y,
-                width: e.pageX - rect.left - x,
-                height: e.pageY - rect.top - y,
-            };
-
-            socket.emit('drawRectangle', rectangleProperties);
-            draw(rectangleProperties);
+        if (!isDraw) {
+            return;
         }
+
+        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
+        const { x, y } = mousePosition;
+        const rectangleProperties = {
+            x,
+            y,
+            width: e.pageX - rect.left - x,
+            height: e.pageY - rect.top - y,
+        };
+
+        socket.emit('drawRectangle', rectangleProperties);
+        drawOnFakeCanvas(rectangleProperties);
     };
 
     /**
@@ -86,13 +103,15 @@ export const useDrawingRectangle = (
 
         const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
         const { x, y } = mousePosition;
-        const width = e.pageX - rect.left - x;
-        const height = e.pageY - rect.top - y;
+        const rectangleProperties = {
+            x,
+            y,
+            width: e.pageX - rect.left - x,
+            height: e.pageY - rect.top - y,
+        };
 
-        socket.emit('drawRectangleStop', {
-            x, y, width, height,
-        });
-        originContext.strokeRect(x, y, width, height);
+        socket.emit('drawRectangleStop', rectangleProperties);
+        drawOnOriginCanvas(rectangleProperties);
 
         setIsDraw(false);
     };
@@ -101,15 +120,8 @@ export const useDrawingRectangle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('drawRectangle', (data: TRectangle) => draw(data));
-
-        socket.on('drawRectangleStop', (data: TRectangle) => {
-            const originContext = originCanvasRef.current?.getContext('2d');
-            if (!originContext) {
-                return;
-            }
-            originContext.strokeRect(data.x, data.y, data.width, data.height);
-        });
+        socket.on('drawRectangle', (data: TRectangle) => drawOnFakeCanvas(data));
+        socket.on('drawRectangleStop', (data: TRectangle) => drawOnOriginCanvas(data));
 
         return () => {
             socket.off('drawRectangle');
