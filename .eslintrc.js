@@ -25,6 +25,7 @@ module.exports = {
         indent: ['error', 4],
         'max-len': ['error', { code: 120 }],
         'no-console': ['warn', { allow: ['log'] }],
+        'object-curly-newline': ['error', { consistent: true }],
         'import/prefer-default-export': 0,
         '@typescript-eslint/indent': ['error', 4],
         'react/jsx-indent': ['error', 4],
