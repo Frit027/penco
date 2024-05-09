@@ -78,14 +78,16 @@ export const useDrawingCircle = (
      * @param {MouseEvent} e - Mouse click event
      */
     const handleMouseMove = (e: MouseEvent) => {
-        if (isDraw) {
-            const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-            const { x, y } = mousePosition;
-            const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
-
-            socket.emit('drawCircle', circleProperties);
-            drawOnFakeCanvas(circleProperties);
+        if (!isDraw) {
+            return;
         }
+
+        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
+        const { x, y } = mousePosition;
+        const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
+
+        socket.emit('drawCircle', circleProperties);
+        drawOnFakeCanvas(circleProperties);
     };
 
     /**
