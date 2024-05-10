@@ -1,14 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { useDrawingLine } from '../../hooks/useDrawingLine';
-import { useDrawingRectangle } from '../../hooks/useDrawingRectangle';
-import { useDrawingCircle } from '../../hooks/useDrawingCircle';
-import { Figure } from '../../interfaces';
+import React, { useRef } from 'react';
+import { useDrawingLine, useDrawingRectangle, useDrawingCircle } from '../../hooks';
+import { TCanvasProps } from './interfaces';
 
 /**
  * Component for displaying a canvas
  */
-export const Canvas = () => {
-    const [figureType, setFigureType] = useState('');
+export const Canvas = ({ figureType }: TCanvasProps) => {
     const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
     const originCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -16,13 +13,8 @@ export const Canvas = () => {
     useDrawingRectangle(fakeCanvasRef, originCanvasRef, figureType);
     useDrawingCircle(fakeCanvasRef, originCanvasRef, figureType);
 
-    const handleChangeFigureType = (selectedFigureType: Figure) => setFigureType(selectedFigureType);
-
     return (
         <div>
-            <button type="button" onClick={() => handleChangeFigureType(Figure.Line)}>Line</button>
-            <button type="button" onClick={() => handleChangeFigureType(Figure.Rectangle)}>Rect</button>
-            <button type="button" onClick={() => handleChangeFigureType(Figure.Circle)}>Circle</button>
             <canvas
                 ref={originCanvasRef}
                 width="600"
