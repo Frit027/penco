@@ -13,7 +13,7 @@ module.exports = {
         hot: true,
         port: 3000,
     },
-    target: ['web', 'es5'],
+    target: ['web', 'es2017'],
     module: {
         rules: [
             {
