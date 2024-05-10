@@ -8,12 +8,12 @@ import { TRectangle } from './interfaces';
  * Hook for drawing a rectangle on the canvas
  * @param {RefObject<HTMLCanvasElement>} fakeCanvasRef - The intermediate canvas on which the figures are drawn first
  * @param {RefObject<HTMLCanvasElement>} originCanvasRef - The final canvas onto which the final figures are transferred
- * @param {string} figureType - The type of figure to determine whether to use a hook
+ * @param {Figure|null} figureType - The type of figure to determine whether to use a hook
  */
 export const useDrawingRectangle = (
     fakeCanvasRef: RefObject<HTMLCanvasElement>,
     originCanvasRef: RefObject<HTMLCanvasElement>,
-    figureType: string,
+    figureType: Figure | null,
 ) => {
     const [isDraw, setIsDraw] = useState(false);
     const [mousePosition, setMousePosition] = useState<TMouseCoordinates>({ x: 0, y: 0 });
