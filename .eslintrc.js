@@ -27,6 +27,7 @@ module.exports = {
         'no-console': ['warn', { allow: ['log'] }],
         'object-curly-newline': ['error', { consistent: true }],
         'import/prefer-default-export': 0,
+        'import/extensions': ['error', { mjs: 'always' }],
         '@typescript-eslint/indent': ['error', 4],
         'react/jsx-indent': ['error', 4],
         'react/function-component-definition': [2, {
