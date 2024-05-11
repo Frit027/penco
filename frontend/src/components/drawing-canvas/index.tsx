@@ -5,7 +5,7 @@ import { TCanvasProps } from './interfaces';
 /**
  * Component for displaying a canvas
  */
-export const Canvas = ({ figureType }: TCanvasProps) => {
+export const DrawingCanvas = ({ figureType }: TCanvasProps) => {
     const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
     const originCanvasRef = useRef<HTMLCanvasElement>(null);
 
