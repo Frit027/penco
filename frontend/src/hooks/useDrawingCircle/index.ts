@@ -2,6 +2,7 @@ import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
+import getCurrentScaledMousePosition from '../utils';
 import { TCircle } from './interfaces';
 
 /**
@@ -61,31 +62,36 @@ export const useDrawingCircle = (
     };
 
     /**
+     * Assembling data to draw a circle
+     * @param {MouseEvent} e - Event when the mouse button is moved or raised
+     * @returns {TCircle} Data for drawing a circle
+     */
+    const getCircleProperties = (e: MouseEvent): TCircle => {
+        const { x, y } = mousePosition;
+        const { x: currentX } = getCurrentScaledMousePosition(e);
+
+        return { x, y, radius: Math.abs(currentX - x) };
+    };
+
+    /**
      * Handling a mouse down
      * @param {MouseEvent} e - Mouse click event
      */
     const handleMouseDown = (e: MouseEvent) => {
         setIsDraw(true);
-
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        setMousePosition({
-            x: e.pageX - rect.left,
-            y: e.pageY - rect.top,
-        });
+        setMousePosition(getCurrentScaledMousePosition(e));
     };
 
     /**
      * Handling a mouse move
-     * @param {MouseEvent} e - Mouse click event
+     * @param {MouseEvent} e - Mouse move event
      */
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDraw) {
             return;
         }
 
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        const { x, y } = mousePosition;
-        const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
+        const circleProperties = getCircleProperties(e);
 
         socket.emit('draw:circle', circleProperties);
         drawOnFakeCanvas(circleProperties);
@@ -93,11 +99,10 @@ export const useDrawingCircle = (
 
     /**
      * Handling a mouse up
+     * @param {MouseEvent} e - Mouse move event
      */
     const handleMouseUp = (e: MouseEvent) => {
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        const { x, y } = mousePosition;
-        const circleProperties = { x, y, radius: Math.abs(e.pageX - rect.left - x) };
+        const circleProperties = getCircleProperties(e);
 
         socket.emit('stop-drawing:circle', circleProperties);
         drawOnOriginCanvas(circleProperties);

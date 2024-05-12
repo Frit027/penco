@@ -2,6 +2,7 @@ import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
+import getCurrentScaledMousePosition from '../utils';
 import { TRectangle } from './interfaces';
 
 /**
@@ -58,36 +59,41 @@ export const useDrawingRectangle = (
     };
 
     /**
+     * Assembling data to draw a rectangle
+     * @param {MouseEvent} e - Event when the mouse button is moved or raised
+     * @returns {TRectangle} Data for drawing a rectangle
+     */
+    const getRectangleProperties = (e: MouseEvent): TRectangle => {
+        const { x, y } = mousePosition;
+        const currentMousePosition = getCurrentScaledMousePosition(e);
+
+        return {
+            x,
+            y,
+            width: currentMousePosition.x - x,
+            height: currentMousePosition.y - y,
+        };
+    };
+
+    /**
      * Handling a mouse down
      * @param {MouseEvent} e - Mouse click event
      */
     const handleMouseDown = (e: MouseEvent) => {
         setIsDraw(true);
-
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        setMousePosition({
-            x: e.pageX - rect.left,
-            y: e.pageY - rect.top,
-        });
+        setMousePosition(getCurrentScaledMousePosition(e));
     };
 
     /**
      * Handling a mouse move
-     * @param {MouseEvent} e - Mouse click event
+     * @param {MouseEvent} e - Mouse move event
      */
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDraw) {
             return;
         }
 
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        const { x, y } = mousePosition;
-        const rectangleProperties = {
-            x,
-            y,
-            width: e.pageX - rect.left - x,
-            height: e.pageY - rect.top - y,
-        };
+        const rectangleProperties = getRectangleProperties(e);
 
         socket.emit('draw:rectangle', rectangleProperties);
         drawOnFakeCanvas(rectangleProperties);
@@ -95,21 +101,10 @@ export const useDrawingRectangle = (
 
     /**
      * Handling a mouse up
+     * @param {MouseEvent} e - Mouse up event
      */
     const handleMouseUp = (e: MouseEvent) => {
-        const originContext = originCanvasRef.current?.getContext('2d');
-        if (!originContext) {
-            return;
-        }
-
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        const { x, y } = mousePosition;
-        const rectangleProperties = {
-            x,
-            y,
-            width: e.pageX - rect.left - x,
-            height: e.pageY - rect.top - y,
-        };
+        const rectangleProperties = getRectangleProperties(e);
 
         socket.emit('stop-drawing:rectangle', rectangleProperties);
         drawOnOriginCanvas(rectangleProperties);
