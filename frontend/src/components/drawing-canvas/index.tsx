@@ -17,15 +17,15 @@ export const DrawingCanvas = ({ figureType }: TCanvasProps) => {
         <div>
             <canvas
                 ref={originCanvasRef}
-                width="600"
-                height="600"
-                style={{ position: 'absolute', border: '1px solid #ccc', margin: '10px' }}
+                width={window.innerWidth}
+                height={window.innerHeight}
+                style={{ position: 'fixed', top: 0, left: 0 }}
             />
             <canvas
                 ref={fakeCanvasRef}
-                width="600"
-                height="600"
-                style={{ position: 'absolute', border: '1px solid #ccc', margin: '10px' }}
+                width={window.innerWidth}
+                height={window.innerHeight}
+                style={{ position: 'absolute', top: 0, left: 0 }}
             />
         </div>
     );
