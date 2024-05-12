@@ -5,7 +5,7 @@ import { TMouseCoordinates } from './interfaces';
  * @param {MouseEvent} e - Mouse click event
  * @returns {TMouseCoordinates} The x and y coordinates of the mouse cursor
  */
-export const getScaledMousePosition = (e: MouseEvent): TMouseCoordinates => {
+export default (e: MouseEvent): TMouseCoordinates => {
     const canvas = e.target as HTMLCanvasElement;
     const rect = canvas.getBoundingClientRect();
 
