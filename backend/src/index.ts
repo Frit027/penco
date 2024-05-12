@@ -1,10 +1,22 @@
 import express from 'express';
 import cors from 'cors';
+import multer from 'multer';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
 const app = express();
 app.use(cors());
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, 'uploads'),
+    filename: (req, file, cb) => cb(null, `${Date.now()}.pdf`),
+});
+
+const upload = multer({ storage });
+
+app.post('/api/file', upload.single('file'), (_, res) => {
+    res.sendStatus(200);
+});
 
 const server = createServer(app);
 const io = new Server(server, {
