@@ -2,7 +2,7 @@ import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
-import { getScaledMousePosition } from '../utils';
+import getCurrentScaledMousePosition from '../utils';
 import { TPathCoordinates } from './interfaces';
 
 /**
@@ -57,19 +57,19 @@ export const useDrawingLine = (
      */
     const handleMouseDown = (e: MouseEvent) => {
         setIsDraw(true);
-        setMousePosition(getScaledMousePosition(e));
+        setMousePosition(getCurrentScaledMousePosition(e));
     };
 
     /**
      * Handling a mouse move
-     * @param {MouseEvent} e - Mouse click event
+     * @param {MouseEvent} e - Mouse move event
      */
     const handleMouseMove = (e: MouseEvent) => {
         if (!isDraw) {
             return;
         }
 
-        const newMousePosition = getScaledMousePosition(e);
+        const newMousePosition = getCurrentScaledMousePosition(e);
 
         const coordinates = {
             x1: mousePosition.x,
