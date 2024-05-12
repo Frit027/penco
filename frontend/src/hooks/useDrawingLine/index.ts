@@ -2,6 +2,7 @@ import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
 import { TMouseCoordinates } from '../interfaces';
+import { getScaledMousePosition } from '../utils';
 import { TPathCoordinates } from './interfaces';
 
 /**
@@ -56,12 +57,7 @@ export const useDrawingLine = (
      */
     const handleMouseDown = (e: MouseEvent) => {
         setIsDraw(true);
-
-        const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-        setMousePosition({
-            x: e.pageX - rect.left,
-            y: e.pageY - rect.top,
-        });
+        setMousePosition(getScaledMousePosition(e));
     };
 
     /**
@@ -69,29 +65,26 @@ export const useDrawingLine = (
      * @param {MouseEvent} e - Mouse click event
      */
     const handleMouseMove = (e: MouseEvent) => {
-        if (isDraw) {
-            const rect = (e.target as HTMLCanvasElement).getBoundingClientRect();
-
-            const newMousePosition = {
-                x: e.pageX - rect.left,
-                y: e.pageY - rect.top,
-            };
-
-            const coordinates = {
-                x1: mousePosition.x,
-                y1: mousePosition.y,
-                x2: newMousePosition.x,
-                y2: newMousePosition.y,
-            };
-
-            socket.emit('draw:line', coordinates);
-            draw(coordinates);
-
-            setMousePosition({
-                x: newMousePosition.x,
-                y: newMousePosition.y,
-            });
+        if (!isDraw) {
+            return;
         }
+
+        const newMousePosition = getScaledMousePosition(e);
+
+        const coordinates = {
+            x1: mousePosition.x,
+            y1: mousePosition.y,
+            x2: newMousePosition.x,
+            y2: newMousePosition.y,
+        };
+
+        socket.emit('draw:line', coordinates);
+        draw(coordinates);
+
+        setMousePosition({
+            x: newMousePosition.x,
+            y: newMousePosition.y,
+        });
     };
 
     /**
