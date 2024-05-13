@@ -3,6 +3,7 @@ import cors from 'cors';
 import multer from 'multer';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import path from 'path';
 
 const app = express();
 app.use(cors());
@@ -14,8 +15,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post('/api/file', upload.single('file'), (_, res) => {
-    res.sendStatus(200);
+app.post('/api/file', upload.single('file'), (req, res) => {
+    res.sendFile(path.join(__dirname, `../uploads/${req.file?.filename}`));
 });
 
 const server = createServer(app);
@@ -49,6 +50,11 @@ io.on('connection', (socket) => {
 
     socket.on('stop-drawing:circle', (data) => {
         socket.broadcast.emit('stop-drawing:circle', data);
+    });
+
+    socket.on('url', (data) => {
+        console.log(data);
+        socket.broadcast.emit('url', data);
     });
 });
 
