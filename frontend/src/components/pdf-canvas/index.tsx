@@ -1,14 +1,14 @@
-import React, {
-    useContext, useState, useRef, useEffect,
-} from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/webpack.mjs';
 import { type PDFDocumentProxy } from 'pdfjs-dist';
-import { FigureTypeContext, TFigureTypeContext, PdfFileContext, TPdfFileContext } from '../../contexts';
+import { FigureTypeContext, TFigureTypeContext, BlobUrlToPDFContext, TBlobUrlToPDFContext } from '../../contexts';
 import { useDrawingLine, useDrawingRectangle, useDrawingCircle } from '../../hooks';
+import { socket } from '../../socket';
+import { TBlobUrlToPDF } from './interfaces';
 
 export const PDFCanvas = () => {
     const { figureType } = useContext(FigureTypeContext) as TFigureTypeContext;
-    const { pdfFile } = useContext(PdfFileContext) as TPdfFileContext;
+    const { blobUrlToPDF } = useContext(BlobUrlToPDFContext) as TBlobUrlToPDFContext;
 
     const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,25 +25,29 @@ export const PDFCanvas = () => {
 
     const decrementPageNum = () => setCurrentPage((prevNum) => prevNum - 1);
 
+    const readPDF = (url: string) => {
+        const loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then((pdf) => {
+            setPdfDoc(pdf);
+            setTotalPageCount(pdf.numPages);
+        });
+    };
+
     useEffect(() => {
-        if (!pdfFile) {
+        socket.on('url', ({ url }: TBlobUrlToPDF) => readPDF(url));
+
+        return () => {
+            socket.off('url');
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!blobUrlToPDF) {
             return;
         }
 
-        const readAsArrayBuffer = async () => {
-            const arrayBuffer = await pdfFile.arrayBuffer();
-            return arrayBuffer;
-        };
-
-        const arrayBufferPromise = readAsArrayBuffer();
-        arrayBufferPromise.then((arrayBuffer) => {
-            const loadingTask = pdfjsLib.getDocument(arrayBuffer);
-            loadingTask.promise.then((pdf) => {
-                setPdfDoc(pdf);
-                setTotalPageCount(pdf.numPages);
-            });
-        });
-    }, [pdfFile]);
+        readPDF(blobUrlToPDF);
+    }, [blobUrlToPDF]);
 
     useEffect(() => {
         if (!pdfDoc) {
@@ -86,13 +90,19 @@ export const PDFCanvas = () => {
     }, [pdfDoc, currentPage]);
 
     return (
-        <div style={{ position: 'absolute', left: '610px', border: '1px solid red' }}>
-            <canvas ref={originCanvasRef} />
-            <canvas ref={fakeCanvasRef} style={{ position: 'absolute', left: 0 }} />
-            <div>
-                <button type="button" onClick={decrementPageNum} disabled={currentPage === 1}>Prev</button>
-                <button type="button" onClick={incrementPageNum} disabled={currentPage === totalPageCount}>Next</button>
-            </div>
-        </div>
+        pdfDoc
+            ? (
+                <div style={{ position: 'absolute', left: '610px', border: '1px solid red' }}>
+                    <canvas ref={originCanvasRef} />
+                    <canvas ref={fakeCanvasRef} style={{ position: 'absolute', left: 0 }} />
+                    <div>
+                        <button type="button" onClick={decrementPageNum} disabled={currentPage === 1}>Prev</button>
+                        <button type="button" onClick={incrementPageNum} disabled={currentPage === totalPageCount}>
+                            Next
+                        </button>
+                    </div>
+                </div>
+            )
+            : null
     );
 };
