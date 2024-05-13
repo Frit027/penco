@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { Figure } from '../../interfaces';
-import { FigureTypeContext, PdfFileContext } from '../../contexts';
+import { FigureTypeContext, BlobUrlToPDFContext } from '../../contexts';
 import { Toolbar } from '../../components/toolbar';
 import { DrawingCanvas } from '../../components/drawing-canvas';
 import { PDFCanvas } from '../../components/pdf-canvas';
 
 export const MainPage = () => {
-    const [pdfFile, setPdfFile] = useState<File | null>(null);
+    const [blobUrlToPDF, setBlobUrlToPDF] = useState<string | null>(null);
     const [figureType, setFigureType] = useState<Figure | null>(null);
 
     const figureTypeContextValue = useMemo(() => ({
@@ -14,16 +14,16 @@ export const MainPage = () => {
     }), [figureType, setFigureType]);
 
     const pdfFileContextValue = useMemo(() => ({
-        pdfFile, setPdfFile,
-    }), [pdfFile, setPdfFile]);
+        blobUrlToPDF, setBlobUrlToPDF,
+    }), [blobUrlToPDF, setBlobUrlToPDF]);
 
     return (
         <FigureTypeContext.Provider value={figureTypeContextValue}>
-            <PdfFileContext.Provider value={pdfFileContextValue}>
+            <BlobUrlToPDFContext.Provider value={pdfFileContextValue}>
                 <Toolbar />
                 <DrawingCanvas />
                 <PDFCanvas />
-            </PdfFileContext.Provider>
+            </BlobUrlToPDFContext.Provider>
         </FigureTypeContext.Provider>
     );
 };
