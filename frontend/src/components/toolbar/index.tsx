@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Figure } from '../../interfaces';
-import { TToolbarProps } from './interfaces';
+import { FigureTypeContext, TFigureTypeContext } from '../../contexts';
+import { FileUploader } from '../file-uploader';
 
 /**
  * Component for displaying a toolbar
  */
-export const Toolbar = ({ changeFigureType }: TToolbarProps) => (
-    <div>
-        <button type="button" onClick={() => changeFigureType(Figure.Line)}>Line</button>
-        <button type="button" onClick={() => changeFigureType(Figure.Rectangle)}>Rect</button>
-        <button type="button" onClick={() => changeFigureType(Figure.Circle)}>Circle</button>
-    </div>
-);
+export const Toolbar = () => {
+    const { setFigureType } = useContext(FigureTypeContext) as TFigureTypeContext;
+
+    return (
+        <div style={{ position: 'absolute', zIndex: 1 }}>
+            <button type="button" onClick={() => setFigureType(Figure.Line)}>Line</button>
+            <button type="button" onClick={() => setFigureType(Figure.Rectangle)}>Rect</button>
+            <button type="button" onClick={() => setFigureType(Figure.Circle)}>Circle</button>
+            <FileUploader />
+        </div>
+    );
+};

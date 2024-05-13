@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
+import { FigureTypeContext, TFigureTypeContext } from '../../contexts';
 import { useDrawingLine, useDrawingRectangle, useDrawingCircle } from '../../hooks';
-import { TCanvasProps } from './interfaces';
 
 /**
  * Component for displaying a canvas
  */
-export const DrawingCanvas = ({ figureType }: TCanvasProps) => {
+export const DrawingCanvas = () => {
+    const { figureType } = useContext(FigureTypeContext) as TFigureTypeContext;
     const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
     const originCanvasRef = useRef<HTMLCanvasElement>(null);
 
