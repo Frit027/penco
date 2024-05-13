@@ -1,8 +1,8 @@
 import React, { createContext } from 'react';
 
-export type TPdfFileContext = {
-    pdfFile: File | null,
-    setPdfFile: React.Dispatch<React.SetStateAction<File | null>>,
+export type TBlobUrlToPDFContext = {
+    blobUrlToPDF: string | null,
+    setBlobUrlToPDF: React.Dispatch<React.SetStateAction<string | null>>,
 };
 
-export const PdfFileContext = createContext<TPdfFileContext | null>(null);
+export const BlobUrlToPDFContext = createContext<TBlobUrlToPDFContext | null>(null);
