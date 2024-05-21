@@ -1,7 +1,7 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
-import { TMouseCoordinates } from '../interfaces';
+import { TMouseCoordinates, TSocketData } from '../interfaces';
 import getCurrentScaledMousePosition from '../utils';
 import { TRectangle } from './interfaces';
 
@@ -95,7 +95,7 @@ export const useDrawingRectangle = (
 
         const rectangleProperties = getRectangleProperties(e);
 
-        socket.emit('draw:rectangle', rectangleProperties);
+        socket.emit('draw:rectangle', { ...rectangleProperties, canvasId: originCanvasRef.current?.id });
         drawOnFakeCanvas(rectangleProperties);
     };
 
@@ -106,7 +106,7 @@ export const useDrawingRectangle = (
     const handleMouseUp = (e: MouseEvent) => {
         const rectangleProperties = getRectangleProperties(e);
 
-        socket.emit('stop-drawing:rectangle', rectangleProperties);
+        socket.emit('stop-drawing:rectangle', { ...rectangleProperties, canvasId: originCanvasRef.current?.id });
         drawOnOriginCanvas(rectangleProperties);
 
         setIsDraw(false);
@@ -116,8 +116,19 @@ export const useDrawingRectangle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('draw:rectangle', (data: TRectangle) => drawOnFakeCanvas(data));
-        socket.on('stop-drawing:rectangle', (data: TRectangle) => drawOnOriginCanvas(data));
+        socket.on('draw:rectangle', (data: TSocketData<TRectangle>) => {
+            if (originCanvasRef.current?.id !== data.canvasId) {
+                return;
+            }
+            drawOnFakeCanvas(data);
+        });
+
+        socket.on('stop-drawing:rectangle', (data: TSocketData<TRectangle>) => {
+            if (originCanvasRef.current?.id !== data.canvasId) {
+                return;
+            }
+            drawOnOriginCanvas(data);
+        });
 
         return () => {
             socket.off('draw:rectangle');

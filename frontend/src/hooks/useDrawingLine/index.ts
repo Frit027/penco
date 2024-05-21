@@ -1,7 +1,7 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
-import { TMouseCoordinates } from '../interfaces';
+import { TMouseCoordinates, TSocketData } from '../interfaces';
 import getCurrentScaledMousePosition from '../utils';
 import { TPathCoordinates } from './interfaces';
 
@@ -22,21 +22,21 @@ export const useDrawingLine = (
     /**
      * Line drawing
      * @param {TPathCoordinates} pathCoordinates - Coordinates of the start and end points of the line
+     * @param {number} pathCoordinates.x1 - The horizontal coordinate to be moved to
+     * @param {number} pathCoordinates.y1 - The vertical coordinate to be moved to
+     * @param {number} pathCoordinates.x2 - The x-axis coordinate of the line's end point
+     * @param {number} pathCoordinates.y2 - The y-axis coordinate of the line's end point
      */
-    const draw = (pathCoordinates: TPathCoordinates) => {
-        if (!fakeCanvasRef.current) {
+    const draw = ({ x1, y1, x2, y2 }: TPathCoordinates) => {
+        const fakeCanvas = fakeCanvasRef.current;
+        if (!fakeCanvas) {
             return;
         }
-        const fakeCanvas = fakeCanvasRef.current;
 
         const fakeContext = fakeCanvas.getContext('2d');
         if (!fakeContext) {
             return;
         }
-
-        const {
-            x1, y1, x2, y2,
-        } = pathCoordinates;
 
         fakeContext.beginPath();
         fakeContext.moveTo(x1, y1);
@@ -78,7 +78,7 @@ export const useDrawingLine = (
             y2: newMousePosition.y,
         };
 
-        socket.emit('draw:line', coordinates);
+        socket.emit('draw:line', { ...coordinates, canvasId: originCanvasRef.current?.id });
         draw(coordinates);
 
         setMousePosition({
@@ -96,7 +96,12 @@ export const useDrawingLine = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('draw:line', (data) => draw(data));
+        socket.on('draw:line', (data: TSocketData<TPathCoordinates>) => {
+            if (originCanvasRef.current?.id !== data.canvasId) {
+                return;
+            }
+            draw(data);
+        });
 
         return () => {
             socket.off('draw:line');

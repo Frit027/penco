@@ -1,7 +1,7 @@
 import { useState, useEffect, RefObject } from 'react';
 import { socket } from '../../socket';
 import { Figure } from '../../interfaces';
-import { TMouseCoordinates } from '../interfaces';
+import { TMouseCoordinates, TSocketData } from '../interfaces';
 import getCurrentScaledMousePosition from '../utils';
 import { TCircle } from './interfaces';
 
@@ -27,11 +27,11 @@ export const useDrawingCircle = (
      * @param {number} circleProperties.radius - The circle's radius
      */
     const drawOnFakeCanvas = ({ x, y, radius }: TCircle) => {
-        if (!fakeCanvasRef.current) {
+        const fakeCanvas = fakeCanvasRef.current;
+        if (!fakeCanvas) {
             return;
         }
 
-        const fakeCanvas = fakeCanvasRef.current;
         const fakeContext = fakeCanvas.getContext('2d');
         if (!fakeContext) {
             return;
@@ -93,7 +93,7 @@ export const useDrawingCircle = (
 
         const circleProperties = getCircleProperties(e);
 
-        socket.emit('draw:circle', circleProperties);
+        socket.emit('draw:circle', { ...circleProperties, canvasId: originCanvasRef.current?.id });
         drawOnFakeCanvas(circleProperties);
     };
 
@@ -104,7 +104,7 @@ export const useDrawingCircle = (
     const handleMouseUp = (e: MouseEvent) => {
         const circleProperties = getCircleProperties(e);
 
-        socket.emit('stop-drawing:circle', circleProperties);
+        socket.emit('stop-drawing:circle', { ...circleProperties, canvasId: originCanvasRef.current?.id });
         drawOnOriginCanvas(circleProperties);
 
         setIsDraw(false);
@@ -114,8 +114,19 @@ export const useDrawingCircle = (
      * Subscribing to the socket draw event
      */
     useEffect(() => {
-        socket.on('draw:circle', (data: TCircle) => drawOnFakeCanvas(data));
-        socket.on('stop-drawing:circle', (data: TCircle) => drawOnOriginCanvas(data));
+        socket.on('draw:circle', (data: TSocketData<TCircle>) => {
+            if (originCanvasRef.current?.id !== data.canvasId) {
+                return;
+            }
+            drawOnFakeCanvas(data);
+        });
+
+        socket.on('stop-drawing:circle', (data: TSocketData<TCircle>) => {
+            if (originCanvasRef.current?.id !== data.canvasId) {
+                return;
+            }
+            drawOnOriginCanvas(data);
+        });
 
         return () => {
             socket.off('draw:circle');
