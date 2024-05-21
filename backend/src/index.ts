@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('url', (data) => {
-        console.log(data);
         socket.broadcast.emit('url', data);
     });
 });
