@@ -9,24 +9,20 @@ export const DrawingCanvas = () => {
     const { figureType } = useContext(FigureTypeContext) as TFigureTypeContext;
     const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
     const originCanvasRef = useRef<HTMLCanvasElement>(null);
-    const [content, setContent] = useState<ImageData | null>(null);
+    const [imageCanvas, setImageCanvas] = useState<HTMLImageElement | null>(null);
 
     useDrawingLine(fakeCanvasRef, originCanvasRef, figureType);
     useDrawingRectangle(fakeCanvasRef, originCanvasRef, figureType);
     useDrawingCircle(fakeCanvasRef, originCanvasRef, figureType);
 
     const saveContent = () => {
-        const originCanvas = originCanvasRef.current;
-        if (!originCanvas) {
+        if (!originCanvasRef.current) {
             return;
         }
 
-        const originContext = originCanvas.getContext('2d');
-        if (!originContext) {
-            return;
-        }
-
-        setContent(originContext.getImageData(0, 0, originCanvas.width, originCanvas.height));
+        const img = new Image();
+        img.src = originCanvasRef.current.toDataURL();
+        setImageCanvas(img);
     };
 
     useEffect(() => {
@@ -35,15 +31,13 @@ export const DrawingCanvas = () => {
     }, []);
 
     useEffect(() => {
-        const originCanvas = originCanvasRef.current;
-        const originContext = originCanvas?.getContext('2d');
-
-        if (!content) {
+        if (!imageCanvas) {
             return;
         }
 
-        originContext?.putImageData(content, 0, 0);
-    }, [content]);
+        const originContext = originCanvasRef.current?.getContext('2d');
+        originContext?.drawImage(imageCanvas, 0, 0);
+    }, [imageCanvas]);
 
     return (
         <div>
