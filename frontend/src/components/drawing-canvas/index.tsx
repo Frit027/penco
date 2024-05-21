@@ -43,6 +43,7 @@ export const DrawingCanvas = () => {
         <div>
             <canvas
                 ref={originCanvasRef}
+                id="origin-canvas"
                 width={window.innerWidth}
                 height={window.innerHeight}
                 style={{ position: 'fixed', top: 0, left: 0 }}

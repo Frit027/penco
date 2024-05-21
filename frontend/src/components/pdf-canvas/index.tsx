@@ -14,8 +14,8 @@ export const PDFCanvas = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPageCount, setTotalPageCount] = useState<number>();
 
-    const originCanvasRef = useRef<HTMLCanvasElement>(null);
     const fakeCanvasRef = useRef<HTMLCanvasElement>(null);
+    const originCanvasRef = useRef<HTMLCanvasElement>(null);
 
     useDrawingLine(fakeCanvasRef, originCanvasRef, figureType);
     useDrawingRectangle(fakeCanvasRef, originCanvasRef, figureType);
@@ -93,7 +93,7 @@ export const PDFCanvas = () => {
         pdfDoc
             ? (
                 <div style={{ position: 'absolute', left: '610px', border: '1px solid red' }}>
-                    <canvas ref={originCanvasRef} />
+                    <canvas id="pdf-canvas-1" ref={originCanvasRef} />
                     <canvas ref={fakeCanvasRef} style={{ position: 'absolute', left: 0 }} />
                     <div>
                         <button type="button" onClick={decrementPageNum} disabled={currentPage === 1}>Prev</button>
