@@ -1,0 +1,58 @@
+.toolbar {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 0 rgb(0 0 0 / 30%), 0 4px 25px -4px rgb(0 0 0 / 30%);
+  background-color: white;
+
+  &__button {
+    height: 45px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e5e5e5;
+    }
+
+    &_selected {
+      background-color: #D2E9FF;
+
+      &:hover {
+        background-color: #D2E9FF;
+        cursor: default;
+      }
+    }
+  }
+
+  &__icon {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    background: center / 32px no-repeat;
+
+    &_line {
+      background-size: 28px;
+      background-image: url('icons/line.svg');
+    }
+
+    &_rectangle {
+      background-image: url('icons/rectangle.svg');
+    }
+
+    &_circle {
+      background-image: url('icons/circle.svg');
+    }
+
+    &_pdf {
+      background-image: url('icons/pdf.svg');
+    }
+  }
+}
