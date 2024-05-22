@@ -26,13 +26,7 @@ module.exports = {
                             presets: [
                                 '@babel/preset-react',
                                 ['@babel/preset-env', {
-                                    targets: {
-                                        ie: '11',
-                                        edge: '17',
-                                        firefox: '60',
-                                        chrome: '60',
-                                        safari: '12',
-                                    },
+                                    targets: '> 0.25%, not dead',
                                     useBuiltIns: 'usage',
                                     corejs: 3,
                                 }],
