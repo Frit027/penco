@@ -1,6 +1,8 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import { FigureTypeContext, TFigureTypeContext } from '../../contexts';
 import { useDrawingLine, useDrawingRectangle, useDrawingCircle } from '../../hooks';
+import { classes } from './config';
+import './styles.less';
 
 /**
  * Component for displaying a canvas
@@ -42,17 +44,17 @@ export const DrawingCanvas = () => {
     return (
         <div>
             <canvas
+                className={classes.component}
                 ref={originCanvasRef}
-                id="origin-canvas"
                 width={window.innerWidth}
                 height={window.innerHeight}
-                style={{ position: 'fixed', top: 0, left: 0 }}
+                id="origin-canvas"
             />
             <canvas
+                className={classes.component}
                 ref={fakeCanvasRef}
                 width={window.innerWidth}
                 height={window.innerHeight}
-                style={{ position: 'fixed', top: 0, left: 0 }}
             />
         </div>
     );
