@@ -1,10 +1,7 @@
 /*!***********************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/components/file-uploader/styles.less ***!
   \***********************************************************************************************************************************/
-.input-container {
-  height: 45px;
-}
-.input-container__input {
+.input {
   display: none;
 }
 
@@ -23,32 +20,42 @@
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3), 0 4px 25px -4px rgba(0, 0, 0, 0.3);
   background-color: white;
 }
-.toolbar__item {
+.toolbar__button {
+  height: 45px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+}
+.toolbar__button:hover {
+  background-color: #e5e5e5;
+}
+.toolbar__button_selected {
+  background-color: #D2E9FF;
+}
+.toolbar__button_selected:hover {
+  background-color: #D2E9FF;
+  cursor: default;
+}
+.toolbar__icon {
+  display: inline-block;
   width: 45px;
   height: 45px;
   background: center / 32px no-repeat;
-  cursor: pointer;
 }
-.toolbar__item:hover {
-  background-color: #e5e5e5;
-  border-radius: 4px;
-}
-.toolbar__item_selected {
-  background-color: #ABFFFF;
-}
-.toolbar__item_line {
+.toolbar__icon_line {
   background-size: 28px;
-  background-image: url(2b79da267e4e61598f2c.svg);
+  background-image: url(95c1a1e5c0d98028ac9e.svg);
 }
-.toolbar__item_rectangle {
-  background-image: url(d29841d8d6aac9f51a4c.svg);
+.toolbar__icon_rectangle {
+  background-image: url(abc036ef8125eb5171e7.svg);
 }
-.toolbar__item_circle {
-  background-image: url(0ea0e9e0b128f4353abb.svg);
+.toolbar__icon_circle {
+  background-image: url(e3af7b0cfa6f0f415c5f.svg);
 }
-.toolbar__item_pdf {
-  display: inline-block;
-  background-image: url(78c74fafb4d5ce3b2537.svg);
+.toolbar__icon_pdf {
+  background-image: url(f0b297e76bd87775aed5.svg);
 }
 
 /*!************************************************************************************************************************************!*\
