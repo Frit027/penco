@@ -1,9 +1,16 @@
-import React, { useContext, ChangeEvent } from 'react';
+import React, { useContext, useRef, ChangeEvent } from 'react';
+import classNames from 'classnames';
 import { BlobUrlToPDFContext, TBlobUrlToPDFContext } from '../../contexts';
 import { socket } from '../../socket';
+import { classes as toolbarClasses } from '../toolbar/config';
+import { classes } from './config';
+import './styles.less';
 
 export const FileUploader = () => {
     const { setBlobUrlToPDF } = useContext(BlobUrlToPDFContext) as TBlobUrlToPDFContext;
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const clickFileInput = () => inputRef.current?.click();
 
     const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -24,5 +31,10 @@ export const FileUploader = () => {
         }
     };
 
-    return <input onChange={onChange} type="file" accept=".pdf" />;
+    return (
+        <button className={toolbarClasses.button} type="button" aria-label="PDF" onClick={clickFileInput}>
+            <span className={classNames(toolbarClasses.icon, toolbarClasses.pdf)} />
+            <input className={classes.component} ref={inputRef} onChange={onChange} type="file" accept=".pdf" />
+        </button>
+    );
 };
