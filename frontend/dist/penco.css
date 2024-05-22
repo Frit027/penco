@@ -1,0 +1,62 @@
+/*!***********************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/components/file-uploader/styles.less ***!
+  \***********************************************************************************************************************************/
+.input-container {
+  height: 45px;
+}
+.input-container__input {
+  display: none;
+}
+
+/*!*****************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/components/toolbar/styles.less ***!
+  \*****************************************************************************************************************************/
+.toolbar {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 4px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3), 0 4px 25px -4px rgba(0, 0, 0, 0.3);
+  background-color: white;
+}
+.toolbar__item {
+  width: 45px;
+  height: 45px;
+  background: center / 32px no-repeat;
+  cursor: pointer;
+}
+.toolbar__item:hover {
+  background-color: #e5e5e5;
+  border-radius: 4px;
+}
+.toolbar__item_selected {
+  background-color: #ABFFFF;
+}
+.toolbar__item_line {
+  background-size: 28px;
+  background-image: url(2b79da267e4e61598f2c.svg);
+}
+.toolbar__item_rectangle {
+  background-image: url(d29841d8d6aac9f51a4c.svg);
+}
+.toolbar__item_circle {
+  background-image: url(0ea0e9e0b128f4353abb.svg);
+}
+.toolbar__item_pdf {
+  display: inline-block;
+  background-image: url(78c74fafb4d5ce3b2537.svg);
+}
+
+/*!************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/components/drawing-canvas/styles.less ***!
+  \************************************************************************************************************************************/
+.drawing-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
