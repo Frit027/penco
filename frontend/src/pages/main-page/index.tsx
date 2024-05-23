@@ -3,7 +3,7 @@ import { Figure } from '../../interfaces';
 import { FigureTypeContext, BlobUrlToPDFContext } from '../../contexts';
 import { Toolbar } from '../../components/toolbar';
 import { DrawingCanvas } from '../../components/drawing-canvas';
-import { PDFCanvas } from '../../components/pdf-canvas';
+import { PDFCanvasContainer } from '../../components/pdf-canvas-container';
 
 export const MainPage = () => {
     const [blobUrlToPDF, setBlobUrlToPDF] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export const MainPage = () => {
             <BlobUrlToPDFContext.Provider value={pdfFileContextValue}>
                 <Toolbar />
                 <DrawingCanvas />
-                <PDFCanvas />
+                <PDFCanvasContainer />
             </BlobUrlToPDFContext.Provider>
         </FigureTypeContext.Provider>
     );
