@@ -16,11 +16,44 @@
   }
 
   &_origin {
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
   }
 
   &_fake {
     position: absolute;
     left: 0;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__button {
+    width: 40px;
+    height: 26px;
+    border-radius: 3px;
+    border: 2px solid #8DC6FF;
+    background: url('icons/arrow-left.svg') white center / 18px no-repeat;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #D2E9FF;
+    }
+
+    &_disabled {
+      opacity: 0.4;
+      cursor: default;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+
+    &_next {
+      transform: rotate(180deg);
+    }
   }
 }

@@ -67,3 +67,55 @@
   left: 0;
 }
 
+/*!********************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./src/components/pdf-canvas/styles.less ***!
+  \********************************************************************************************************************************/
+.pdf-canvas {
+  position: absolute;
+  border: 1px solid #3176EE;
+  border-radius: 5px;
+}
+.pdf-canvas_first {
+  left: 75px;
+}
+.pdf-canvas_second {
+  left: 500px;
+}
+.pdf-canvas_third {
+  left: 925px;
+}
+.pdf-canvas_origin {
+  border-radius: 5px 5px 0 0;
+}
+.pdf-canvas_fake {
+  position: absolute;
+  left: 0;
+}
+.pdf-canvas__buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.pdf-canvas__button {
+  width: 40px;
+  height: 26px;
+  border-radius: 3px;
+  border: 2px solid #8DC6FF;
+  background: url(351d8494018a306ed02e.svg) white center / 18px no-repeat;
+  cursor: pointer;
+}
+.pdf-canvas__button:hover {
+  background-color: #D2E9FF;
+}
+.pdf-canvas__button_disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pdf-canvas__button_disabled:hover {
+  background-color: white;
+}
+.pdf-canvas__button_next {
+  transform: rotate(180deg);
+}
+
