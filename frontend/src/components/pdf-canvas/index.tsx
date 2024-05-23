@@ -63,11 +63,25 @@ export const PDFCanvas = ({ PDFDoc, id }: TPDFCanvasProps) => {
         >
             <canvas className={classes.originCanvas} id={`pdf-canvas-${id}`} ref={originCanvasRef} />
             <canvas className={classes.fakeCanvas} ref={fakeCanvasRef} />
-            <div>
-                <button type="button" onClick={decrementPageNum} disabled={currentPage === 1}>Prev</button>
-                <button type="button" onClick={incrementPageNum} disabled={currentPage === PDFDoc.numPages}>
-                    Next
-                </button>
+            <div className={classes.buttons}>
+                <button
+                    className={classNames(classes.button, {
+                        [classes.disabledButton]: currentPage === 1,
+                    })}
+                    type="button"
+                    onClick={decrementPageNum}
+                    disabled={currentPage === 1}
+                    aria-label="Previous"
+                />
+                <button
+                    className={classNames(classes.button, classes.nextButton, {
+                        [classes.disabledButton]: currentPage === PDFDoc.numPages,
+                    })}
+                    type="button"
+                    onClick={incrementPageNum}
+                    disabled={currentPage === PDFDoc.numPages}
+                    aria-label="Next"
+                />
             </div>
         </div>
     );
