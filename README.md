@@ -23,7 +23,7 @@ To run the site later, just run the `npm run dev` and `npm run start` commands.
 
 ## Technologies
 ### Real-time mode
-- WebSocket protocol:
+WebSocket protocol:
   - backend: [socket.io](https://www.npmjs.com/package/socket.io) `4.7.5`
   - frontend: [socket.io-client](https://www.npmjs.com/package/socket.io-client) `4.7.5`
 ### Backend
