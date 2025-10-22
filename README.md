@@ -5,8 +5,8 @@ A web application for collaboratively drawing and building various geometric sha
 You can also upload PDF documents to the graphic canvas as separate objects and draw on their pages.
 
 ## Dependencies
-- Node.js v16.20.1 or later;
-- npm v8.19.4 or later.
+- **Node.js** v16.20.1 or later;
+- **npm** v8.19.4 or later.
 
 ## Installation and launch
 - clone the repository;
