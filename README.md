@@ -28,7 +28,7 @@ WebSocket protocol:
   - frontend: [socket.io-client](https://www.npmjs.com/package/socket.io-client) `4.7.5`
 ### Backend
 - [TypeScript](https://www.typescriptlang.org/) `5.4.5`
-- [Express]() `4.19.2`
+- [Express](https://expressjs.com/) `4.19.2`
 ### Frontend
 - [TypeScript](https://www.typescriptlang.org/) `5.4.5`
 - [React](https://react.dev/) `18.3.1`
