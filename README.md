@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/node-%3E%3D16.20.1-brightgreen)
+![Static Badge](https://img.shields.io/badge/npm-%3E%3D8.19.4-blue)
+
 # penco
 
 ## About
