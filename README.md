@@ -4,8 +4,13 @@
 # penco
 
 ## About
-A web application for collaboratively drawing and building various geometric shapes on canvas in real time.
-You can also upload PDF documents to the graphic canvas as separate objects and draw on their pages.
+A web application for collaboratively drawing and building various geometric shapes on canvas in real time.  
+You can upload PDF documents to the graphic canvas as separate objects and draw on their pages.
+
+## Architecture
+The architecture of a web application consists of three main components: the server side, the client side, and the
+WebSocket protocol.
+![Architecture](assets/architecture.jpg)
 
 ## Dependencies
 - **Node.js** v16.20.1 or later;
