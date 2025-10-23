@@ -13,12 +13,14 @@ WebSocket protocol.
 ![Architecture](assets/architecture.jpg)
 
 ## Demonstration
-### Collaborative drawing by three users
+#### Collaborative drawing by three users
 The screenshot below shows three users drawing on the same canvas.
+
 ![Collaborative drawing](assets/collaborative-drawing.png)
 
-### Collaborative note-taking on a downloaded PDF document
+#### Collaborative note-taking on a downloaded PDF document
 The screenshot below shows three users leaving notes on a single PDF document.
+
 ![Collaborative PDF-file](assets/collaborative-pdf.png)
 
 ## Dependencies
