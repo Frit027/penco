@@ -12,6 +12,15 @@ The architecture of a web application consists of three main components: the ser
 WebSocket protocol.
 ![Architecture](assets/architecture.jpg)
 
+## Demonstration
+### Collaborative drawing by three users
+The screenshot below shows three users drawing on the same canvas.
+![Collaborative drawing](assets/collaborative-drawing.png)
+
+### Collaborative note-taking on a downloaded PDF document
+The screenshot below shows three users leaving notes on a single PDF document.
+![Collaborative PDF-file](assets/collaborative-pdf.png)
+
 ## Dependencies
 - **Node.js** v16.20.1 or later;
 - **npm** v8.19.4 or later.
