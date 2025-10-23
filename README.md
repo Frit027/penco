@@ -1,5 +1,5 @@
-![Static Badge](https://img.shields.io/badge/node-%3E%3D16.20.1-brightgreen)
-![Static Badge](https://img.shields.io/badge/npm-%3E%3D8.19.4-blue)
+![Static Badge](https://img.shields.io/badge/node-%3E%3D16.20.1-brightgreen?link=https%3A%2F%2Fnodejs.org%2Fen)
+![Static Badge](https://img.shields.io/badge/npm-%3E%3D8.19.4-blue?link=https%3A%2F%2Fdocs.npmjs.com%2Fdownloading-and-installing-node-js-and-npm)
 
 # penco
 
