@@ -26,13 +26,14 @@ server.
 
 ## Demonstration
 #### Collaborative drawing by three users
-The screenshot below shows three users drawing on the same canvas. Users can draw a line, circle, or rectangle.
+The screenshot below shows three users drawing on the same canvas.  
+Users can draw a line, circle, or rectangle.
 
 ![Collaborative drawing](assets/collaborative-drawing.png)
 
 #### Collaborative note-taking on a downloaded PDF document
-The screenshot below shows three users leaving notes on a single PDF document. Users can upload any PDF document, flip
-through its pages, and leave notes on them.
+The screenshot below shows three users leaving notes on a single PDF document.  
+Users can upload any PDF document, flip through its pages, and leave notes on them.
 
 ![Collaborative PDF-file](assets/collaborative-pdf.png)
 
