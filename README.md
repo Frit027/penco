@@ -10,35 +10,54 @@ You can upload PDF documents to the graphic canvas as separate objects and draw 
 ## Architecture
 The architecture of a web application consists of three main components: the server side, the client side, and the
 WebSocket protocol.
+
+The connecting component is the WebSocket protocol. To create a bidirectional connection in the system on both the
+server and client sides, a special WebSocket instance must be created.
+
 ![Architecture](assets/architecture.jpg)
+
+The server initializes an instance of the WebSocket protocol, which monitors client connections and listens for named
+events. When any of these events occur, the server processes the data received from the client and immediately sends it
+to all other users.
+
+The client also initializes an instance of the WebSocket protocol, which establishes a connection with the server
+socket, creates the necessary handlers for events set on the server, and emits the necessary events to send data to the
+server.
 
 ## Demonstration
 #### Collaborative drawing by three users
-The screenshot below shows three users drawing on the same canvas.
+The screenshot below shows three users drawing on the same canvas. Users can draw a line, circle, or rectangle.
 
 ![Collaborative drawing](assets/collaborative-drawing.png)
 
 #### Collaborative note-taking on a downloaded PDF document
-The screenshot below shows three users leaving notes on a single PDF document.
+The screenshot below shows three users leaving notes on a single PDF document. Users can upload any PDF document, flip
+through its pages, and leave notes on them.
 
 ![Collaborative PDF-file](assets/collaborative-pdf.png)
+
+## Installation and Usage
+Clone the repository.  
+In the project root and inside the [backend](backend) and [frontend](frontend) directories run the command:
+```shell
+npm i
+```
+Inside the [backend](backend) directory run the command:
+```shell
+npm run dev
+```
+Inside the [frontend](frontend) directory run the command:
+```shell
+npm run build
+npm run start
+```
+Open http://localhost:3000/.
+
+To run the site later, just run the `npm run dev` and `npm run start` commands.
 
 ## Dependencies
 - **Node.js** v16.20.1 or later;
 - **npm** v8.19.4 or later.
-
-## Installation and launch
-- clone the repository;
-- in the project root and inside the [backend](backend) and [frontend](frontend) directories run the command:
-  - `npm i`
-- inside the [backend](backend) directory run the command:
-  - `npm run dev`
-- inside the [frontend](frontend) directory run the command:
-  - `npm run build`
-  - `npm run start`
-- open http://localhost:3000/.
-
-To run the site later, just run the `npm run dev` and `npm run start` commands.
 
 ## Technologies
 ### Real-time mode
