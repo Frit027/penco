@@ -4,13 +4,12 @@
 ![Static Badge](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 
-<h2>
+<h1>
     <div align="right">
         <code>🇺🇸</code> 
         <a href="README-RU.md">🇷🇺</a>
     </div>
-</h2>
-<h1>penco</h1>
+</h1>
 
 ## About
 A web application for collaboratively drawing and building various geometric shapes on canvas in real time.  

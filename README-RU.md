@@ -4,13 +4,12 @@
 ![Static Badge](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 
-<h2>
+<h1>
     <div align="right">
         <a href="README.md">🇺🇸</a>
         <code>🇷🇺</code> 
     </div>
-</h2>
-<h1>penco</h1>
+</h1>
 
 ## Описание
 penco — это веб-приложение для совместного редактирования графических схем в режиме реального времени. Пользователи
