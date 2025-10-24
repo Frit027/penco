@@ -6,8 +6,8 @@
 
 <h2>
     <div align="right">
-        <code>:us:</code> 
-        <a href="README-RU.md">:ru:</a>
+        <code>🇺🇸</code> 
+        <a href="README-RU.md">🇷🇺</a>
     </div>
 </h2>
 
