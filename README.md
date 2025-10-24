@@ -4,11 +4,12 @@
 ![Static Badge](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 
-<p style="float: right;">
-    <span style="margin-right: 5px;">Language:</span>
-    <span style="margin-right: 5px; font-size: 22px;">:us:</span>
-    <a href="README-RU.md" style="font-size: 22px;">:ru:</a>
-</p>
+<h2>
+    <div align="right">
+        <code>:us:</code> 
+        <a href="README-RU.md">:ru:</a>
+    </div>
+</h2>
 
 # penco
 
