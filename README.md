@@ -10,8 +10,7 @@
         <a href="README-RU.md">🇷🇺</a>
     </div>
 </h2>
-
-# penco
+<h1>penco</h1>
 
 ## About
 A web application for collaboratively drawing and building various geometric shapes on canvas in real time.  
