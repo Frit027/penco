@@ -7,9 +7,11 @@
 <h1>
     <div align="right">
         <a href="README.md">
-            <img src="https://flagcdn.com/gb.svg" width="36" height="24" title="Английский язык" alt="Английский язык">
+            <img src="assets/gb.svg" width="30" height="30" title="English" alt="English">
         </a>
-        <img src="https://flagcdn.com/ru.svg" width="30" height="24" title="Русский язык" alt="Русский язык">
+        <a href="">
+            <img src="assets/ru.svg" width="30" height="30" title="Russian" alt="Russian">
+        </a>
     </div>
     penco
 </h1>
