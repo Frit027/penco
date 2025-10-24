@@ -6,7 +6,7 @@
 
 <h1>
     <div align="right">
-        <a href="">
+        <a href="#">
             <img src="assets/gb.svg" width="30" height="30" title="English" alt="English">
         </a>
         <a href="README-RU.md">
