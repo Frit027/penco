@@ -6,8 +6,10 @@
 
 <h1>
     <div align="right">
-        <code>🇺🇸</code> 
-        <a href="README-RU.md">🇷🇺</a>
+        <img src="https://flagcdn.com/gb.svg" width="36" height="24" title="English" alt="English">
+        <a href="README-RU.md">
+            <img src="https://flagcdn.com/ru.svg" width="30" height="24" title="Russian" alt="Russian">
+        </a>
     </div>
     penco
 </h1>
