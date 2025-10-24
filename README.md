@@ -6,12 +6,8 @@
 
 <h1>
     <div align="right">
-        <a href="#">
-            <img src="assets/gb.svg" width="30" height="30" title="English" alt="English">
-        </a>
-        <a href="README-RU.md">
-            <img src="assets/ru.svg" width="30" height="30" title="Russian" alt="Russian">
-        </a>
+        <code>🇺🇸</code>
+        <a href="README-RU.md">🇷🇺</a>
     </div>
     penco
 </h1>
