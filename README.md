@@ -4,6 +4,10 @@
 ![Static Badge](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 
+<p align="right">
+Language: <a href="README.md">:us:</a> <a href="README-RU.md">:ru:</a>
+</p>
+
 # penco
 
 ## About
@@ -64,10 +68,9 @@ To run the site later, just run the `npm run dev` and `npm run start` commands.
 - **npm** v8.19.4 or later.
 
 ## Technologies
-### Real-time mode
-WebSocket protocol:
-  - backend: [socket.io](https://www.npmjs.com/package/socket.io) `4.7.5`
-  - frontend: [socket.io-client](https://www.npmjs.com/package/socket.io-client) `4.7.5`
+### WebSocket protocol
+- backend: [socket.io](https://www.npmjs.com/package/socket.io) `4.7.5`
+- frontend: [socket.io-client](https://www.npmjs.com/package/socket.io-client) `4.7.5`
 ### Backend
 - [TypeScript](https://www.typescriptlang.org/) `5.4.5`
 - [Express](https://expressjs.com/) `4.19.2`
