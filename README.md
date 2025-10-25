@@ -5,11 +5,11 @@
 ![Static Badge](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
 
 <h1>
-    <div align="right">
-        <code>🇺🇸</code>
-        <a href="README-RU.md">🇷🇺</a>
-    </div>
-    penco
+<div align="right">
+<code><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg" width=32/></code> 
+<a href="README-RU.md"><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/ru.svg" width=32/></a>
+</div>
+penco
 </h1>
 
 ## About
