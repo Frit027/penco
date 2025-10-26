@@ -6,12 +6,8 @@
 
 <h1>
     <div align="right">
-        <code>
-            <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg" width=32/>
-        </code> 
-        <a href="README-RU.md">
-            <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/ru.svg" width=32/>
-        </a>
+        <code><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg" width="32" alt="English"/></code>
+        <a href="README-RU.md"><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/ru.svg" width="32" alt="Russian"/></a>
     </div>
     penco
 </h1>

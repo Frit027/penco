@@ -6,8 +6,8 @@
 
 <h1>
     <div align="right">
-        <a href="README.md">🇺🇸</a>
-        <code>🇷🇺</code>
+        <a href="README.md"><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg" width="32" alt="Английский язык"/></a>
+        <code><img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/ru.svg" width="32" alt="Русский язык"/></code>
     </div>
     penco
 </h1>
