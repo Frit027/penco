@@ -56,7 +56,7 @@ Inside the [backend](backend) directory run the command:
 ```shell
 npm run dev
 ```
-Inside the [frontend](frontend) directory run the command:
+Inside the [frontend](frontend) directory run the commands:
 ```shell
 npm run build
 npm run start
